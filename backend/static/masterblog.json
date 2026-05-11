@@ -1,0 +1,134 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Masterblog API",
+    "version": "1.0.0"
+  },
+  "servers": [{ "url": "http://localhost:5001" }],
+  "tags": [{ "name": "Post", "description": "Post API - CRUD" }],
+
+  "paths": {
+    "/api/posts": {
+      "get": {
+        "summary": "Get all posts",
+        "tags": ["Post"],
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "direction",
+            "in": "query",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+
+      "post": {
+        "summary": "Create post",
+        "tags": ["Post"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["title", "content"],
+                "properties": {
+                  "title": { "type": "string" },
+                  "content": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+
+    "/api/posts/{post_id}": {
+      "delete": {
+        "summary": "Delete post",
+        "tags": ["Post"],
+        "parameters": [
+          {
+            "name": "post_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Deleted" },
+          "404": { "description": "Not found" }
+        }
+      },
+
+      "put": {
+        "summary": "Update post",
+        "tags": ["Post"],
+        "parameters": [
+          {
+            "name": "post_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "content": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Updated" },
+          "404": { "description": "Not found" }
+        }
+      }
+    },
+
+    "/api/posts/search": {
+      "get": {
+        "summary": "Search posts",
+        "tags": ["Post"],
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "content",
+            "in": "query",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}
